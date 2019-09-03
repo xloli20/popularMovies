@@ -5,10 +5,10 @@ public class Movies {
     private String mTitle;
     private String mImage;
     private String mPlot;
-    private String mRating;
+    private Double mRating;
     private String mDate;
 
-    public Movies(String mTitle, String mImage, String mPlot, String mRating, String mDate) {
+    public Movies(String mTitle, String mImage, String mPlot, Double mRating, String mDate) {
         this.mTitle = mTitle;
         this.mImage = mImage;
         this.mPlot = mPlot;
@@ -31,7 +31,7 @@ public class Movies {
         return mPlot;
     }
 
-    public String getmRating() {
+    public Double getmRating() {
         return mRating;
     }
 
@@ -51,7 +51,7 @@ public class Movies {
         this.mPlot = mPlot;
     }
 
-    public void setmRating(String mRating) {
+    public void setmRating(Double mRating) {
         this.mRating = mRating;
     }
 

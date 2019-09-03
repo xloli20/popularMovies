@@ -20,6 +20,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     Context context;
     private ArrayList<Movies> mMovies;
     private static int viewHolderCount;
+    Movies movie;
 
 
     public MovieAdapter(ArrayList<Movies> movies, ListItemClickListener listener) {
@@ -63,11 +64,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
 
         void bind(int position) {
-            /*Picasso.with(context)
-                    .load()
-                    .placeholder(R.mipmap.ic_launcher)
-                    .error(R.mipmap.ic_launcher)
-                    .into(mPosterImageView);*/
+//            Picasso.get()
+//                    .load("http://image.tmdb.org/t/p/w185/"+movie.getmImage())
+//                    .placeholder(R.mipmap.ic_launcher)
+//                    .error(R.mipmap.ic_launcher)
+//                    .into(mPosterImageView);
         }
 
         @Override
