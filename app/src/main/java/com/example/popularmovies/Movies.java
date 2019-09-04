@@ -24,7 +24,7 @@ public class Movies {
     }
 
     public String getmImage() {
-        return mImage;
+        return "http://image.tmdb.org/t/p/w185/" + mImage;
     }
 
     public String getmPlot() {

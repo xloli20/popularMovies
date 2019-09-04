@@ -1,5 +1,7 @@
 package com.example.popularmovies;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,6 +10,8 @@ import java.util.ArrayList;
 
 public class JsonUtils {
     //TODO: fetch data
+    private static final String TAG = JsonUtils.class.getSimpleName();
+
     public static ArrayList<Movies> parseMoviesJson(String json) throws JSONException {
 /* {
 
@@ -33,21 +37,28 @@ public class JsonUtils {
         JSONArray results = movies.getJSONArray("results");
 
         ArrayList<Movies> moviesArrayList = new ArrayList<>();
-        Movies movie = null;
+        //Movies movie = null;
+
         if (results.length() != 0) {
-            for (int i = 0; i <= results.length(); i++) {
-                JSONObject movieData = results.getJSONObject(i);
-                movie = new Movies(
+            for (int i = 0; i <= 19; i++) {
+                JSONObject movieData = (JSONObject) results.get(i);
+                Movies movie = new Movies(
                         movieData.optString("title"),
                         movieData.optString("poster_path"),
                         movieData.optString("overview"),
                         movieData.optDouble("vote_average"),
                         movieData.optString("release_date")
                 );
+                Log.d(TAG, "parseMoviesJson: movie:" + movie);
+                moviesArrayList.add(movie);
+
             }
-            moviesArrayList.add(movie);
+            Log.d(TAG, "parseMoviesJson: moviesArrayList:" + moviesArrayList);
+
         }
 
+        Log.d(TAG, "parseMoviesJson: moviesArrayList2:" + moviesArrayList);
         return moviesArrayList;
+
     }
 }

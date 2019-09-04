@@ -1,11 +1,13 @@
 package com.example.popularmovies;
 
 import android.content.Intent;
+import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,14 +22,14 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.ListItemClickListener {
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private MovieAdapter movieAdapter;
     private RecyclerView mRecyclerView;
 
     private TextView errorMessage;
-    private ProgressBar progressBar;
 
-    private ArrayList<Movies> mMovies;
+    private ArrayList<Movies> mMovies = new ArrayList<>();
 
     URL urL = null;
 
@@ -43,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mRecyclerView.setHasFixedSize(true);
+        urL = NetworkUtils.buildUrl("popular");
+        new MoviesQueryTask().execute(urL);
+        Log.d(TAG, "onCreate: before the adapter bug? " + urL + mMovies);
         movieAdapter = new MovieAdapter(mMovies, this);
         mRecyclerView.setAdapter(movieAdapter);
 
@@ -54,9 +59,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         movieAdapter = new MovieAdapter(mMovies, this);
         mRecyclerView.setAdapter(movieAdapter);
     }
+
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+        Intent intent = new Intent(this, DetailsActivity.class);
         //TODO: send info to detailsActivity
         startActivity(intent);
     }
@@ -72,14 +78,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         int ItemThatWasClickedId = item.getItemId();
         if (ItemThatWasClickedId == R.id.popularM) {
             Objects.requireNonNull(getSupportActionBar()).setTitle("Popular Movies");
-            //TODO: sort by popular movies
-            urL = NetworkUtils.buildUrl("popularity.desc");
+            //http://api.themoviedb.org/3/movie/popular?api_key=53060cc351a94100316d9fdab87ffc7e
+            urL = NetworkUtils.buildUrl("popular");
             new MoviesQueryTask().execute(urL);
 
         } else if (ItemThatWasClickedId == R.id.highestRatedM) {
             Objects.requireNonNull(getSupportActionBar()).setTitle("Highest Rated Movies");
-            //TODO: sort by highest rated
-            urL = NetworkUtils.buildUrl("popular");
+            //http://api.themoviedb.org/3/movie/top_rated?api_key=53060cc351a94100316d9fdab87ffc7e
+            urL = NetworkUtils.buildUrl("top_rated");
             new MoviesQueryTask().execute(urL);
         }
         return super.onOptionsItemSelected(item);
@@ -98,6 +104,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     public class MoviesQueryTask extends AsyncTask<URL, Void, String> {
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
         protected String doInBackground(URL... urls) {
             URL url = urls[0];
             String mResult = null;
@@ -111,12 +123,22 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
         @Override
         protected void onPostExecute(String s) {
+
             if (s != null && !s.equals("")) {
+                Log.d(TAG, "onPostExecute: json" + s);
+
                 showJsonDataView();
                 try {
                     //mMovies.clear();
-                    mMovies = JsonUtils.parseMoviesJson(s);
+                    Log.d(TAG, "onPostExecute: mMovies" + mMovies);
+
+                    mMovies = JsonUtils.parseMoviesJson(s);//
+                    Log.d(TAG, "onPostExecute: mMovies" + mMovies);
+
+                    Log.d(TAG, "onPostExecute: json2" + s);
                     setMovieAdapter();
+                    Log.d(TAG, "onPostExecute: setting the adapter");
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.squareup.picasso.Picasso;
 
@@ -50,7 +49,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public int getItemCount() {
-        return 3;//mMovies.size();
+        return mMovies.size();
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -64,11 +63,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
 
         void bind(int position) {
-//            Picasso.get()
-//                    .load("http://image.tmdb.org/t/p/w185/"+movie.getmImage())
-//                    .placeholder(R.mipmap.ic_launcher)
-//                    .error(R.mipmap.ic_launcher)
-//                    .into(mPosterImageView);
+            Picasso.get()
+                    .load(mMovies.get(position).getmImage())
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .into(mPosterImageView);
         }
 
         @Override
