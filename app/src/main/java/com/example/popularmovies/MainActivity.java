@@ -1,10 +1,9 @@
 package com.example.popularmovies;
 
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     private RecyclerView mRecyclerView;
 
     private TextView errorMessage;
+    private ProgressBar progressBar;
 
     private ArrayList<Movies> mMovies = new ArrayList<>();
 
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         mRecyclerView.setAdapter(movieAdapter);
 
         errorMessage = findViewById(R.id.error_massage);
+        progressBar = findViewById(R.id.progress_bar);
 
     }
 
@@ -63,7 +64,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     @Override
     public void onListItemClick(int clickedItemIndex) {
         Intent intent = new Intent(this, DetailsActivity.class);
-        //TODO: send info to detailsActivity
+        intent.putExtra("mtitle", mMovies.get(clickedItemIndex).getmTitle());
+        intent.putExtra("mPoster", mMovies.get(clickedItemIndex).getmImage());
+        intent.putExtra("mPlot", mMovies.get(clickedItemIndex).getmPlot());
+        intent.putExtra("mRating", mMovies.get(clickedItemIndex).getmRating());
+        intent.putExtra("mDate", mMovies.get(clickedItemIndex).getmDate());
         startActivity(intent);
     }
 
@@ -93,10 +98,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
     private void showJsonDataView() {
         errorMessage.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     private void showErrorMessage() {
+        progressBar.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.INVISIBLE);
         errorMessage.setVisibility(View.VISIBLE);
     }

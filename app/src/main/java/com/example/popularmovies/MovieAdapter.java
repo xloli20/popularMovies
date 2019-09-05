@@ -65,8 +65,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         void bind(int position) {
             Picasso.get()
                     .load(mMovies.get(position).getmImage())
-                    .placeholder(R.mipmap.ic_launcher)
-                    .error(R.mipmap.ic_launcher)
+                    .placeholder(R.drawable.laoding)
+                    .error(R.drawable.laoding)
                     .into(mPosterImageView);
         }
 
