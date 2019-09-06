@@ -17,6 +17,7 @@ public class DetailsActivity extends AppCompatActivity {
     TextView mPlotTextView;
     TextView mDateTextView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,12 +31,16 @@ public class DetailsActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        mTitleTextView.setText(intent.getStringExtra("mtitle"));
-        mPlotTextView.setText(intent.getStringExtra("mPlot"));
-        mRatingTextView.setText(intent.getStringExtra("mRating"));
-        mDateTextView.setText(intent.getStringExtra("mDate"));
+
+        Movies movies = intent.getParcelableExtra("Movies");
+
+        mTitleTextView.setText(movies.getmTitle());
+
+        mPlotTextView.setText(movies.getmPlot());
+        mRatingTextView.setText(Double.toString(movies.getmRating()));
+        mDateTextView.setText(movies.getmDate());
         Picasso.get()
-                .load(intent.getStringExtra("mPoster"))
+                .load(movies.getmImage())
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
                 .into(mImageView);

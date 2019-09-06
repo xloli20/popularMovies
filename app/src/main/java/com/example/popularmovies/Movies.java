@@ -1,6 +1,9 @@
 package com.example.popularmovies;
 
-public class Movies {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Movies implements Parcelable {
 
     private String mTitle;
     private String mImage;
@@ -17,6 +20,30 @@ public class Movies {
     }
 
     public Movies() {
+    }
+
+    public static final Parcelable.Creator<Movies> CREATOR = new Parcelable.Creator<Movies>() {
+        @Override
+        public Movies createFromParcel(Parcel in) {
+            return new Movies(in);
+        }
+
+        @Override
+        public Movies[] newArray(int size) {
+            return new Movies[0];
+        }
+    };
+
+    public Movies(Parcel in) {
+        mTitle = in.readString();
+        mImage = in.readString();
+        mPlot = in.readString();
+        if (in.readByte() == 0) {
+            mRating = null;
+        } else {
+            mRating = in.readDouble();
+        }
+        mDate = in.readString();
     }
 
     public String getmTitle() {
@@ -57,5 +84,24 @@ public class Movies {
 
     public void setmDate(String mDate) {
         this.mDate = mDate;
+    }
+
+    @Override
+    public int describeContents() {
+        return hashCode();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mTitle);
+        parcel.writeString(mImage);
+        parcel.writeString(mPlot);
+        if (mRating == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeDouble(mRating);
+        }
+        parcel.writeString(mDate);
     }
 }

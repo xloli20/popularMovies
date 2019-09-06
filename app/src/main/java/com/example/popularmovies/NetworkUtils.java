@@ -9,7 +9,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
-public class NetworkUtils {
+public final class NetworkUtils {
+
+    private NetworkUtils() {
+    }
+
 
     final static String MOVIES_BASE_URL =
             "https://api.themoviedb.org/3/movie?";

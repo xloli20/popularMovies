@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         mRecyclerView.setHasFixedSize(true);
         urL = NetworkUtils.buildUrl("popular");
         new MoviesQueryTask().execute(urL);
-        Log.d(TAG, "onCreate: before the adapter bug? " + urL + mMovies);
         movieAdapter = new MovieAdapter(mMovies, this);
         mRecyclerView.setAdapter(movieAdapter);
 
@@ -64,11 +62,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     @Override
     public void onListItemClick(int clickedItemIndex) {
         Intent intent = new Intent(this, DetailsActivity.class);
-        intent.putExtra("mtitle", mMovies.get(clickedItemIndex).getmTitle());
-        intent.putExtra("mPoster", mMovies.get(clickedItemIndex).getmImage());
-        intent.putExtra("mPlot", mMovies.get(clickedItemIndex).getmPlot());
-        intent.putExtra("mRating", mMovies.get(clickedItemIndex).getmRating());
-        intent.putExtra("mDate", mMovies.get(clickedItemIndex).getmDate());
+        intent.putExtra("Movies", mMovies.get(clickedItemIndex));
         startActivity(intent);
     }
 
@@ -132,20 +126,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         protected void onPostExecute(String s) {
 
             if (s != null && !s.equals("")) {
-                Log.d(TAG, "onPostExecute: json" + s);
 
                 showJsonDataView();
                 try {
                     //mMovies.clear();
-                    Log.d(TAG, "onPostExecute: mMovies" + mMovies);
 
                     mMovies = JsonUtils.parseMoviesJson(s);//
-                    Log.d(TAG, "onPostExecute: mMovies" + mMovies);
 
-                    Log.d(TAG, "onPostExecute: json2" + s);
                     setMovieAdapter();
-                    Log.d(TAG, "onPostExecute: setting the adapter");
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();

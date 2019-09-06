@@ -8,8 +8,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class JsonUtils {
-    //TODO: fetch data
+public final class JsonUtils {
+
     private static final String TAG = JsonUtils.class.getSimpleName();
 
     public static ArrayList<Movies> parseMoviesJson(String json) throws JSONException {
@@ -37,7 +37,6 @@ public class JsonUtils {
         JSONArray results = movies.getJSONArray("results");
 
         ArrayList<Movies> moviesArrayList = new ArrayList<>();
-        //Movies movie = null;
 
         if (results.length() != 0) {
             for (int i = 0; i <= 19; i++) {
