@@ -7,4 +7,8 @@
     <string name="popular_movies">Popular Movies</string>
     <string name="highest_rated_movies">Highest Rated Movies</string>
     <string name="error_message">Oops! Failed to get movies, please try again</string>
+    <string name="my_favorite_movies">My Favorite Movies</string>
+    <string name="error_fav_message">you didn\'t favorite any movie. try favorite some and come back ;)</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
 </resources>

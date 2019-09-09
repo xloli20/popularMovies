@@ -1,4 +1,4 @@
-package com.example.popularmovies;
+package com.example.popularmovies.Activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,6 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.popularmovies.MovieAdapter;
+import com.example.popularmovies.Movies;
+import com.example.popularmovies.R;
+import com.example.popularmovies.Utils.JsonUtils;
+import com.example.popularmovies.Utils.NetworkUtils;
 
 import org.json.JSONException;
 
@@ -86,6 +92,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
             //http://api.themoviedb.org/3/movie/top_rated?api_key=53060cc351a94100316d9fdab87ffc7e
             urL = NetworkUtils.buildUrl("top_rated");
             new MoviesQueryTask().execute(urL);
+
+        } else if (ItemThatWasClickedId == R.id.favs) {
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

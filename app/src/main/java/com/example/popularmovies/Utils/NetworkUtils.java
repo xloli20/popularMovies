@@ -1,4 +1,4 @@
-package com.example.popularmovies;
+package com.example.popularmovies.Utils;
 
 import android.net.Uri;
 
@@ -39,6 +39,22 @@ public final class NetworkUtils {
         return url;
     }
 
+    public static URL buildUrl2(String id, String Query) {
+        Uri builtUri = Uri.parse(MOVIES_BASE_URL).buildUpon()
+                .appendPath(id)
+                .appendPath(Query)
+                .appendQueryParameter(PARAM_API_KEY, API_KEY)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
+    }
 
     public static String getResponseFromHttpURL(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

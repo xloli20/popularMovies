@@ -1,6 +1,8 @@
-package com.example.popularmovies;
+package com.example.popularmovies.Utils;
 
 import android.util.Log;
+
+import com.example.popularmovies.Movies;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,9 +48,10 @@ public final class JsonUtils {
                         movieData.optString("poster_path"),
                         movieData.optString("overview"),
                         movieData.optDouble("vote_average"),
-                        movieData.optString("release_date")
+                        movieData.optString("release_date"),
+                        movieData.optInt("id")
+
                 );
-                Log.d(TAG, "parseMoviesJson: movie:" + movie);
                 moviesArrayList.add(movie);
 
             }

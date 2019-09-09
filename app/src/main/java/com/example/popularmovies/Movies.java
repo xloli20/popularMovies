@@ -3,23 +3,40 @@ package com.example.popularmovies;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.sql.Array;
+
 public class Movies implements Parcelable {
 
+    private int id;
     private String mTitle;
     private String mImage;
     private String mPlot;
     private Double mRating;
     private String mDate;
+    private Array mTrailers;
+    private Array mReviews;
 
-    public Movies(String mTitle, String mImage, String mPlot, Double mRating, String mDate) {
+    public Movies(String mTitle, String mImage, String mPlot, Double mRating, String mDate, int id) {
         this.mTitle = mTitle;
         this.mImage = mImage;
         this.mPlot = mPlot;
         this.mRating = mRating;
         this.mDate = mDate;
+        this.id = id;
     }
 
     public Movies() {
+    }
+
+    public Movies(int id, String mTitle, String mImage, String mPlot, Double mRating, String mDate, Array mTrailers, Array mReviews) {
+        this.id = id;
+        this.mTitle = mTitle;
+        this.mImage = mImage;
+        this.mPlot = mPlot;
+        this.mRating = mRating;
+        this.mDate = mDate;
+        this.mTrailers = mTrailers;
+        this.mReviews = mReviews;
     }
 
     public static final Parcelable.Creator<Movies> CREATOR = new Parcelable.Creator<Movies>() {
@@ -44,6 +61,9 @@ public class Movies implements Parcelable {
             mRating = in.readDouble();
         }
         mDate = in.readString();
+        id = in.readInt();
+        //mTrailers = in.readArray();
+        //mReviews = in.readArray();
     }
 
     public String getmTitle() {
@@ -86,6 +106,30 @@ public class Movies implements Parcelable {
         this.mDate = mDate;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Array getmTrailers() {
+        return mTrailers;
+    }
+
+    public void setmTrailers(Array mTrailers) {
+        this.mTrailers = mTrailers;
+    }
+
+    public Array getmReviews() {
+        return mReviews;
+    }
+
+    public void setmReviews(Array mReviews) {
+        this.mReviews = mReviews;
+    }
+
     @Override
     public int describeContents() {
         return hashCode();
@@ -103,5 +147,8 @@ public class Movies implements Parcelable {
             parcel.writeDouble(mRating);
         }
         parcel.writeString(mDate);
+        parcel.writeInt(id);
+        //parcel.writeArray(mTrailers);
+        //parcel.writeArray(mReviews);
     }
 }
