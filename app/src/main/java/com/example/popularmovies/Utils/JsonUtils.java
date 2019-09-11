@@ -110,7 +110,7 @@ public final class JsonUtils {
         ArrayList<Reviews> reviewsArrayList = new ArrayList<>();
 
         if (results.length() != 0) {
-            for (int i = 0; i <= results.length(); i++) {
+            for (int i = 0; i <= 1; i++) {
                 JSONObject reviewsData = (JSONObject) results.get(i);
 
                 Reviews review = new Reviews(

@@ -16,6 +16,7 @@ import com.example.popularmovies.Models.Movies;
 import com.example.popularmovies.Models.Reviews;
 import com.example.popularmovies.Models.Trailers;
 import com.example.popularmovies.R;
+import com.example.popularmovies.ReviewsAdapter;
 import com.example.popularmovies.TrailerAdapter;
 import com.example.popularmovies.Utils.JsonUtils;
 import com.example.popularmovies.Utils.NetworkUtils;
@@ -27,7 +28,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class DetailsActivity extends AppCompatActivity implements TrailerAdapter.ListItemClickListener {
+public class DetailsActivity extends AppCompatActivity implements TrailerAdapter.ListItemClickListener, ReviewsAdapter.ListItemClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
 
@@ -43,7 +44,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
 
     private TrailerAdapter trailerAdapter;
     private ArrayList<Trailers> trailers = new ArrayList<>();
-    //ReviewAdapter trailerAdapter;
+    ReviewsAdapter reviewsAdapter;
     private ArrayList<Reviews> reviews = new ArrayList<>();
 
     @Override
@@ -80,26 +81,39 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
                 .error(R.drawable.ic_launcher_background)
                 .into(mImageView);
 
-        LinearLayoutManager tLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager tLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         trailerRecyclerView.setLayoutManager(tLinearLayoutManager);
         setTrailerAdapter();
         URL urL = NetworkUtils.buildUrl2(String.valueOf(movies.getId()), "videos");
         Log.d(TAG, "onCreate: url " + urL);
         new TrailerQueryTask().execute(urL);
+
+        LinearLayoutManager rLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        reviewRecyclerView.setLayoutManager(rLinearLayoutManager);
+        setReviewAdapter();
+        URL url2 = NetworkUtils.buildUrl2(String.valueOf(movies.getId()), "reviews");
+        Log.d(TAG, "onCreate: url " + url2);
+        new ReviewQueryTask().execute(url2);
     }
 
     public void setTrailerAdapter() {
-        trailerAdapter = new TrailerAdapter(trailers, this);/////
+        trailerAdapter = new TrailerAdapter(trailers, this);
         trailerRecyclerView.setHasFixedSize(true);
         trailerRecyclerView.setAdapter(trailerAdapter);
     }
 
+    public void setReviewAdapter() {
+        reviewsAdapter = new ReviewsAdapter(reviews, this);
+        reviewRecyclerView.setHasFixedSize(true);
+        reviewRecyclerView.setAdapter(reviewsAdapter);
+    }
     @Override
     public void onListItemClick(int clickedItemIndex) {
         Intent intentYT = new Intent(Intent.ACTION_VIEW);
         intentYT.setData(Uri.parse("https://www.youtube.com/watch?v=" + trailers.get(clickedItemIndex).gettKey()));
         startActivity(intentYT);
     }
+
 
 
     public class TrailerQueryTask extends AsyncTask<URL, Void, String> {
@@ -127,6 +141,39 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
                 try {
                     trailers = JsonUtils.parseTrailersJson(s);
                     setTrailerAdapter();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+            }
+        }
+    }
+
+    public class ReviewQueryTask extends AsyncTask<URL, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(URL... urls) {
+            URL url = urls[0];
+            String mResult = null;
+            try {
+                mResult = NetworkUtils.getResponseFromHttpURL(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return mResult;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s != null && !s.equals("")) {
+                try {
+                    reviews = JsonUtils.parseReviewsJson(s);
+                    setReviewAdapter();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

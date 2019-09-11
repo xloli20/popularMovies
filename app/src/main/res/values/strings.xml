@@ -11,4 +11,5 @@
     <string name="error_fav_message">you didn\'t favorite any movie. try favorite some and come back ;)</string>
     <string name="trailers">Trailers</string>
     <string name="reviews">Reviews</string>
+    <string name="overview">Overview</string>
 </resources>

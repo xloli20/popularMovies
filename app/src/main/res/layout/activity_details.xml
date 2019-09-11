@@ -97,6 +97,15 @@
             android:padding="4dp">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/overview"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/mPlot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
