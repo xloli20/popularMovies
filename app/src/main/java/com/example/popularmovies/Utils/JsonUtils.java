@@ -1,8 +1,8 @@
 package com.example.popularmovies.Utils;
 
-import android.util.Log;
-
-import com.example.popularmovies.Movies;
+import com.example.popularmovies.Models.Movies;
+import com.example.popularmovies.Models.Reviews;
+import com.example.popularmovies.Models.Trailers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,7 +16,6 @@ public final class JsonUtils {
 
     public static ArrayList<Movies> parseMoviesJson(String json) throws JSONException {
 /* {
-
    "results":[
       {
          "popularity":358.378,
@@ -50,17 +49,81 @@ public final class JsonUtils {
                         movieData.optDouble("vote_average"),
                         movieData.optString("release_date"),
                         movieData.optInt("id")
-
                 );
                 moviesArrayList.add(movie);
 
             }
-            Log.d(TAG, "parseMoviesJson: moviesArrayList:" + moviesArrayList);
 
         }
-
-        Log.d(TAG, "parseMoviesJson: moviesArrayList2:" + moviesArrayList);
         return moviesArrayList;
-
     }
+
+    public static ArrayList<Trailers> parseTrailersJson(String json) throws JSONException {
+/* {
+   "id":429203,
+   "results":[
+      {
+         "id":"5b16c40492514178960195f6",
+         "iso_639_1":"en",
+         "iso_3166_1":"US",
+         "key":"d7rlUe-Thvk",
+         "name":"THE OLD MAN & THE GUN | Official Trailer [HD] | FOX Searchlight",
+         "site":"YouTube",
+         "size":1080,
+         "type":"Trailer"
+      }, */
+
+        JSONObject trailers = new JSONObject(json);
+        JSONArray results = trailers.getJSONArray("results");
+
+        ArrayList<Trailers> trailerArrayList = new ArrayList<>();
+
+        if (results.length() != 0) {
+            for (int i = 0; i <= 2; i++) {
+                JSONObject trailerData = (JSONObject) results.get(i);
+
+                Trailers trailer = new Trailers(trailerData.optString("key"));
+
+                trailerArrayList.add(trailer);
+
+            }
+
+        }
+        return trailerArrayList;
+    }
+
+    public static ArrayList<Reviews> parseReviewsJson(String json) throws JSONException {
+/* {
+   "id":429203,
+   "page":1,
+   "results":[
+      {
+         "author":"Stephen Campbell",
+         "content":"**_A well-made, old-fashioned yarn, but the laid-back ballad-like tone will be too insubstantial for some_**\r\n\r\n>
+         _In the old days, the stickup men were like cowboys. They would just go in shooting, yelling for everyone to lie down. But to me violence is the
+         first sign of an
+          */
+
+        JSONObject reviews = new JSONObject(json);
+        JSONArray results = reviews.getJSONArray("results");
+
+        ArrayList<Reviews> reviewsArrayList = new ArrayList<>();
+
+        if (results.length() != 0) {
+            for (int i = 0; i <= results.length(); i++) {
+                JSONObject reviewsData = (JSONObject) results.get(i);
+
+                Reviews review = new Reviews(
+                        reviewsData.optString("author"),
+                        reviewsData.optString("content")
+                );
+
+                reviewsArrayList.add(review);
+
+            }
+
+        }
+        return reviewsArrayList;
+    }
+
 }

@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.popularmovies.FavoritesAdapter;
-import com.example.popularmovies.Movies;
+import com.example.popularmovies.Models.Movies;
 import com.example.popularmovies.R;
 
 import java.util.ArrayList;
