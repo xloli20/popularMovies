@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.popularmovies.Models.Movies;
 import com.example.popularmovies.Models.Trailers;
 import com.squareup.picasso.Picasso;
 
@@ -20,7 +19,6 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     private static int viewHolderCount;
     final private ListItemClickListener mOnClickListener;
     Context context;
-    Movies movie;
     private ArrayList<Trailers> trailers;
 
     public TrailerAdapter(ArrayList<Trailers> trailers, ListItemClickListener listener) {
