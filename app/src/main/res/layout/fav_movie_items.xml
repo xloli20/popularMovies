@@ -47,25 +47,6 @@
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/mDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="@string/n_a"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/mRating"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="@string/n_a"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/fav"

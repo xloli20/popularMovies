@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.popularmovies.Database.AppDatabase;
 import com.example.popularmovies.Models.Movies;
 import com.example.popularmovies.Models.Reviews;
 import com.example.popularmovies.Models.Trailers;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 public class DetailsActivity extends AppCompatActivity implements TrailerAdapter.ListItemClickListener, ReviewsAdapter.ListItemClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private AppDatabase mDB;
 
     ImageView mImageView;
     TextView mTitleTextView;
@@ -52,6 +54,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
+        mDB = AppDatabase.getInstance(getApplicationContext());
 
         trailerRecyclerView = findViewById(R.id.trailer_list_view);
         reviewRecyclerView = findViewById(R.id.reviews_list_view);
@@ -61,13 +64,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
         mPlotTextView = findViewById(R.id.mPlot);
         mDateTextView = findViewById(R.id.mDate);
         mFavorite = findViewById(R.id.fav);
-        mFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mFavorite.setImageResource(R.drawable.ic_fav);
-                //Todo: add movie data to the DB
-            }
-        });
+
 
         final Intent intent = getIntent();
         final Movies movies = intent.getParcelableExtra("Movies");
@@ -80,6 +77,15 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
                 .into(mImageView);
+
+        mFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mFavorite.setImageResource(R.drawable.ic_fav);
+                //Todo: add movie data to the DB
+
+            }
+        });
 
         LinearLayoutManager tLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         trailerRecyclerView.setLayoutManager(tLinearLayoutManager);
