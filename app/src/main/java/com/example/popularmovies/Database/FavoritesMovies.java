@@ -9,15 +9,17 @@ public class FavoritesMovies {
 
 
     @ColumnInfo(name = "MOVIE_TITLE")
-    private String mTitle;
-    private String mImage;
+    String mTitle;
+
+    @ColumnInfo(name = "MOVIE_IMAGE")
+    String mImage;
 
     @PrimaryKey
     @ColumnInfo(name = "MOVIE_ID")
-    private int mId;
+    int mId;
 
     @ColumnInfo(name = "MOVIE_RELEASE_DATE")
-    private String mDate;
+    String mDate;
 
     public FavoritesMovies(String mTitle, String mImage, int mId, String mDate) {
         this.mTitle = mTitle;

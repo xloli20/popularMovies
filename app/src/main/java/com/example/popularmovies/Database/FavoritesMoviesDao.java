@@ -7,14 +7,14 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Dao
 public interface FavoritesMoviesDao {
-    @Query("SELECT * FROM favoritesmovies")
-    ArrayList<FavoritesMovies> getAll();
+    @Query("SELECT * FROM FavoritesMovies")
+    List<FavoritesMovies> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovie(FavoritesMovies favoritesMovies);
 
     @Delete

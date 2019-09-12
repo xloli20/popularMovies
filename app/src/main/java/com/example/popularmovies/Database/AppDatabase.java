@@ -1,6 +1,5 @@
 package com.example.popularmovies.Database;
 
-
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
@@ -20,13 +19,14 @@ public abstract class AppDatabase extends RoomDatabase {
     public static AppDatabase getInstance(Context context) {
         if (sInstance == null) {
             synchronized (LOCK) {
-                Log.d(LOG_TAG, "Creating new database instance");
+                Log.d(LOG_TAG, "Creating new database instance" + sInstance);
                 sInstance = Room.databaseBuilder(context.getApplicationContext(),
                         AppDatabase.class, AppDatabase.DATABASE_NAME)
+                        .allowMainThreadQueries()
                         .build();
             }
         }
-        Log.d(LOG_TAG, "Getting the database instance");
+        Log.d(LOG_TAG, "Getting the database instance" + sInstance);
         return sInstance;
     }
 

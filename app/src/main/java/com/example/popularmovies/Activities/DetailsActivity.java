@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.popularmovies.Database.AppDatabase;
+import com.example.popularmovies.Database.FavoritesMovies;
 import com.example.popularmovies.Models.Movies;
 import com.example.popularmovies.Models.Reviews;
 import com.example.popularmovies.Models.Trailers;
@@ -83,6 +84,15 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
             public void onClick(View view) {
                 mFavorite.setImageResource(R.drawable.ic_fav);
                 //Todo: add movie data to the DB
+                String mTitle = movies.getmTitle();
+                int mId = movies.getId();
+                String mDate = movies.getmDate();
+                String mImage = movies.getmImage();
+
+                FavoritesMovies favoritesMovies = new FavoritesMovies(mTitle, mImage, mId, mDate);
+                mDB.FavoritesMoviesDao().insertMovie(favoritesMovies);
+                Log.d(TAG, "onClick: movie inserted ");
+                finish();
 
             }
         });

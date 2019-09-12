@@ -2,25 +2,29 @@ package com.example.popularmovies.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.popularmovies.Database.AppDatabase;
+import com.example.popularmovies.Database.FavoritesMovies;
 import com.example.popularmovies.FavoritesAdapter;
-import com.example.popularmovies.Models.Movies;
 import com.example.popularmovies.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class FavoritesActivity extends AppCompatActivity {
+    private static final String TAG = FavoritesActivity.class.getSimpleName();
+
 
     ImageView mFavorite;
     private FavoritesAdapter favoritesAdapter;
     private RecyclerView fRecyclerView;
     private TextView errorMessage;
-    private ArrayList<Movies> fMovies = new ArrayList<>();
 
+    private AppDatabase mDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,19 +33,23 @@ public class FavoritesActivity extends AppCompatActivity {
 
         fRecyclerView = findViewById(R.id.fav_recycler_view);
 
-        GridLayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         fRecyclerView.setLayoutManager(mLayoutManager);
-
         fRecyclerView.setHasFixedSize(true);
+        Log.d(TAG, "onResume: get all ");
 
-        favoritesAdapter = new FavoritesAdapter(fMovies);
+        List<FavoritesMovies> aa = mDB.FavoritesMoviesDao().getAll();
+        Log.d(TAG, "onResume: get all " + aa);
+
+        favoritesAdapter = new FavoritesAdapter(aa);
         fRecyclerView.setAdapter(favoritesAdapter);
 
         errorMessage = findViewById(R.id.error_fav_massage);
 
 
-//        mFavorite = findViewById(R.id.fav);
-//        //if(mFavorite.getResources().getDrawable() == R.drawable.ic_unfav)
+        mDB = AppDatabase.getInstance(getApplicationContext());
+
+        mFavorite = findViewById(R.id.fav);
 //        mFavorite.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -49,5 +57,14 @@ public class FavoritesActivity extends AppCompatActivity {
 //                //Todo: delete movie data from the DB
 //            }
 //        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<FavoritesMovies> aa = mDB.FavoritesMoviesDao().getAll();
+        Log.d(TAG, "onResume: get all " + aa);
+        favoritesAdapter = new FavoritesAdapter(mDB.FavoritesMoviesDao().getAll());
+
     }
 }
