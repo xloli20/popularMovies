@@ -1,5 +1,6 @@
 package com.example.popularmovies.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -12,14 +13,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.popularmovies.Adapters.ReviewsAdapter;
+import com.example.popularmovies.Adapters.TrailerAdapter;
+import com.example.popularmovies.AppExecutors;
 import com.example.popularmovies.Database.AppDatabase;
 import com.example.popularmovies.Database.FavoritesMovies;
 import com.example.popularmovies.Models.Movies;
 import com.example.popularmovies.Models.Reviews;
 import com.example.popularmovies.Models.Trailers;
 import com.example.popularmovies.R;
-import com.example.popularmovies.ReviewsAdapter;
-import com.example.popularmovies.TrailerAdapter;
 import com.example.popularmovies.Utils.JsonUtils;
 import com.example.popularmovies.Utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
@@ -34,6 +36,8 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private AppDatabase mDB;
+
+    Context context;
 
     ImageView mImageView;
     TextView mTitleTextView;
@@ -89,11 +93,17 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
                 String mDate = movies.getmDate();
                 String mImage = movies.getmImage();
 
-                FavoritesMovies favoritesMovies = new FavoritesMovies(mTitle, mImage, mId, mDate);
-                mDB.FavoritesMoviesDao().insertMovie(favoritesMovies);
-                Log.d(TAG, "onClick: movie inserted ");
-                finish();
+                final FavoritesMovies favoritesMovies = new FavoritesMovies(mTitle, mImage, mId, mDate);
 
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        // COMPLETED (3) Move the remaining logic inside the run method
+                        mDB.favoritesMoviesDao().insertMovie(favoritesMovies);
+                        Log.d(TAG, "onClick: movie inserted ");
+                        finish();
+                    }
+                });
             }
         });
 

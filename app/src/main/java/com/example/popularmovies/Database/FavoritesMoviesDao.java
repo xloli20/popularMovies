@@ -11,6 +11,7 @@ import java.util.List;
 
 @Dao
 public interface FavoritesMoviesDao {
+
     @Query("SELECT * FROM FavoritesMovies")
     List<FavoritesMovies> getAll();
 

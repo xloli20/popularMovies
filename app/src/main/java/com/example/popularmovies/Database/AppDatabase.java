@@ -22,7 +22,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 Log.d(LOG_TAG, "Creating new database instance" + sInstance);
                 sInstance = Room.databaseBuilder(context.getApplicationContext(),
                         AppDatabase.class, AppDatabase.DATABASE_NAME)
-                        .allowMainThreadQueries()
+                        //.allowMainThreadQueries()
                         .build();
             }
         }
@@ -30,6 +30,6 @@ public abstract class AppDatabase extends RoomDatabase {
         return sInstance;
     }
 
-    public abstract FavoritesMoviesDao FavoritesMoviesDao();
+    public abstract FavoritesMoviesDao favoritesMoviesDao();
 
 }

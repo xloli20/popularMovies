@@ -1,14 +1,16 @@
-package com.example.popularmovies;
+package com.example.popularmovies.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.popularmovies.Models.Movies;
+import com.example.popularmovies.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
+    private final String TAG = MovieAdapter.class.getSimpleName();
 
     Context context;
     private ArrayList<Movies> mMovies;
@@ -64,6 +67,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
 
         void bind(int position) {
+            Log.d(TAG, "bind: mMovies.get(position).getmImage()" + mMovies.get(position).getmImage());
             Picasso.get()
                     .load(mMovies.get(position).getmImage())
                     .placeholder(R.drawable.laoding)

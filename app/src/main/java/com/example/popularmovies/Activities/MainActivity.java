@@ -12,8 +12,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.popularmovies.Adapters.MovieAdapter;
 import com.example.popularmovies.Models.Movies;
-import com.example.popularmovies.MovieAdapter;
 import com.example.popularmovies.R;
 import com.example.popularmovies.Utils.JsonUtils;
 import com.example.popularmovies.Utils.NetworkUtils;

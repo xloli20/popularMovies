@@ -8,9 +8,9 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.popularmovies.Adapters.FavoritesAdapter;
 import com.example.popularmovies.Database.AppDatabase;
 import com.example.popularmovies.Database.FavoritesMovies;
-import com.example.popularmovies.FavoritesAdapter;
 import com.example.popularmovies.R;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class FavoritesActivity extends AppCompatActivity {
         fRecyclerView.setHasFixedSize(true);
         Log.d(TAG, "onResume: get all ");
 
-        List<FavoritesMovies> aa = mDB.FavoritesMoviesDao().getAll();
+        List<FavoritesMovies> aa = mDB.favoritesMoviesDao().getAll();
         Log.d(TAG, "onResume: get all " + aa);
 
         favoritesAdapter = new FavoritesAdapter(aa);
@@ -62,9 +62,9 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        List<FavoritesMovies> aa = mDB.FavoritesMoviesDao().getAll();
+        List<FavoritesMovies> aa = mDB.favoritesMoviesDao().getAll();
         Log.d(TAG, "onResume: get all " + aa);
-        favoritesAdapter = new FavoritesAdapter(mDB.FavoritesMoviesDao().getAll());
+        favoritesAdapter = new FavoritesAdapter(mDB.favoritesMoviesDao().getAll());
 
     }
 }

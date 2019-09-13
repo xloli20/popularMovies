@@ -2,19 +2,17 @@ package com.example.popularmovies.Models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.sql.Array;
+import android.util.Log;
 
 public class Movies implements Parcelable {
 
+    private static final String TAG = Movies.class.getSimpleName();
     private int id;
     private String mTitle;
     private String mImage;
     private String mPlot;
     private Double mRating;
     private String mDate;
-    private Array mTrailers;
-    private Array mReviews;
 
     public Movies(String mTitle, String mImage, String mPlot, Double mRating, String mDate, int id) {
         this.mTitle = mTitle;
@@ -28,16 +26,6 @@ public class Movies implements Parcelable {
     public Movies() {
     }
 
-    public Movies(int id, String mTitle, String mImage, String mPlot, Double mRating, String mDate, Array mTrailers, Array mReviews) {
-        this.id = id;
-        this.mTitle = mTitle;
-        this.mImage = mImage;
-        this.mPlot = mPlot;
-        this.mRating = mRating;
-        this.mDate = mDate;
-        this.mTrailers = mTrailers;
-        this.mReviews = mReviews;
-    }
 
     public static final Parcelable.Creator<Movies> CREATOR = new Parcelable.Creator<Movies>() {
         @Override
@@ -62,8 +50,6 @@ public class Movies implements Parcelable {
         }
         mDate = in.readString();
         id = in.readInt();
-        //mTrailers = in.readArray();
-        //mReviews = in.readArray();
     }
 
     public String getmTitle() {
@@ -71,6 +57,8 @@ public class Movies implements Parcelable {
     }
 
     public String getmImage() {
+        Log.d(TAG, "getmImage: http://image.tmdb.org/t/p/w185/" + mImage);
+
         return "http://image.tmdb.org/t/p/w185/" + mImage;
     }
 
@@ -114,22 +102,6 @@ public class Movies implements Parcelable {
         this.id = id;
     }
 
-    public Array getmTrailers() {
-        return mTrailers;
-    }
-
-    public void setmTrailers(Array mTrailers) {
-        this.mTrailers = mTrailers;
-    }
-
-    public Array getmReviews() {
-        return mReviews;
-    }
-
-    public void setmReviews(Array mReviews) {
-        this.mReviews = mReviews;
-    }
-
     @Override
     public int describeContents() {
         return hashCode();
@@ -148,7 +120,5 @@ public class Movies implements Parcelable {
         }
         parcel.writeString(mDate);
         parcel.writeInt(id);
-        //parcel.writeArray(mTrailers);
-        //parcel.writeArray(mReviews);
     }
 }
