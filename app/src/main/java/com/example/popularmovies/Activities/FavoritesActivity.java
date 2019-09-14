@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.example.popularmovies.Adapters.FavoritesAdapter;
 import com.example.popularmovies.AppExecutors;
@@ -24,10 +23,12 @@ public class FavoritesActivity extends AppCompatActivity {
     private static final String TAG = FavoritesActivity.class.getSimpleName();
 
 
-    ImageView mFavorite;
-    private FavoritesAdapter favoritesAdapter;
-    private RecyclerView fRecyclerView;
+    //ImageView mFavorite;
 
+    private FavoritesAdapter favoritesAdapter;
+    RecyclerView fRecyclerView;
+
+    //DB object
     private AppDatabase mDB;
 
     @Override
@@ -37,15 +38,15 @@ public class FavoritesActivity extends AppCompatActivity {
 
         fRecyclerView = findViewById(R.id.fav_recycler_view);
 
+        //setting the favorites movies recycler view
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         fRecyclerView.setLayoutManager(mLayoutManager);
         fRecyclerView.setHasFixedSize(true);
-
         favoritesAdapter = new FavoritesAdapter(this);
-
         fRecyclerView.setAdapter(favoritesAdapter);
 
 
+        //DB initialization
         mDB = AppDatabase.getInstance(getApplicationContext());
 
         //
@@ -77,7 +78,7 @@ public class FavoritesActivity extends AppCompatActivity {
 //            @Override
 //            public void onClick(final View view) {
 //                mFavorite.setImageResource(R.drawable.ic_unfav);
-//                //Todo: delete movie data from the DB
+//                //delete movie data from the DB
 ////                AppExecutors.getInstance().diskIO().execute(new Runnable() {
 ////                    @Override
 ////                    public void run() {

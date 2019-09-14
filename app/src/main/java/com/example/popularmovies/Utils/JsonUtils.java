@@ -41,7 +41,7 @@ public final class JsonUtils {
 
         if (results.length() != 0) {
             for (int i = 0; i <= 19; i++) {
-                JSONObject movieData = (JSONObject) results.get(i);
+                JSONObject movieData = results.getJSONObject(i);
                 Movies movie = new Movies(
                         movieData.optString("title"),
                         movieData.optString("poster_path"),
@@ -80,7 +80,7 @@ public final class JsonUtils {
 
         if (results.length() != 0) {
             for (int i = 0; i <= 2; i++) {
-                JSONObject trailerData = (JSONObject) results.get(i);
+                JSONObject trailerData = results.getJSONObject(i);
 
                 Trailers trailer = new Trailers(trailerData.optString("key"));
 
@@ -111,7 +111,7 @@ public final class JsonUtils {
 
         if (results.length() != 0) {
             for (int i = 0; i <= 1; i++) {
-                JSONObject reviewsData = (JSONObject) results.get(i);
+                JSONObject reviewsData = results.getJSONObject(i);
 
                 Reviews review = new Reviews(
                         reviewsData.optString("author"),

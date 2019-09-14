@@ -1,6 +1,5 @@
 package com.example.popularmovies.Adapters;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
 
     private static int viewHolderCount;
     final private ListItemClickListener mOnClickListener;
-    Context context;
     private ArrayList<Trailers> trailers;
 
     public TrailerAdapter(ArrayList<Trailers> trailers, ListItemClickListener listener) {
@@ -33,7 +31,6 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     public TrailerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.trailers_items, viewGroup, false);
         return new TrailerViewHolder(view);
-
     }
 
     @Override

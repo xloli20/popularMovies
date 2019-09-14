@@ -1,6 +1,5 @@
 package com.example.popularmovies.Adapters;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,8 +17,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
 
     private static int viewHolderCount;
     final private ListItemClickListener mOnClickListener;
-    Context context;
-    Reviews reviewsdata;
     private ArrayList<Reviews> reviews;
 
     public ReviewsAdapter(ArrayList<Reviews> Reviews, ListItemClickListener listener) {
@@ -65,7 +62,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
         void bind(int position) {
             authorTextView.setText(reviews.get(position).getrAuthor());
             contentTextView.setText(reviews.get(position).getrContent());
-
         }
 
         @Override

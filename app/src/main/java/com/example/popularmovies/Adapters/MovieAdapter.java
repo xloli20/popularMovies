@@ -1,6 +1,5 @@
 package com.example.popularmovies.Adapters;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,11 +19,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     private final String TAG = MovieAdapter.class.getSimpleName();
 
-    Context context;
     private ArrayList<Movies> mMovies;
     private static int viewHolderCount;
-    Movies movie;
-
 
     public MovieAdapter(ArrayList<Movies> movies, ListItemClickListener listener) {
         mMovies = movies;
@@ -43,7 +39,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.movie_items, viewGroup, false);
         return new MovieViewHolder(view);
-
     }
 
     @Override

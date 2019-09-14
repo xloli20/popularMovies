@@ -28,16 +28,15 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity implements MovieAdapter.ListItemClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private MovieAdapter movieAdapter;
-    private RecyclerView mRecyclerView;
-
-    private TextView errorMessage;
-    private ProgressBar progressBar;
-
-    private ArrayList<Movies> mMovies = new ArrayList<>();
-
+    //global URL object
     URL urL = null;
-
+    private RecyclerView mRecyclerView;
+    //for movies
+    private MovieAdapter movieAdapter;
+    private ArrayList<Movies> mMovies = new ArrayList<>();
+    private ProgressBar progressBar;
+    //views
+    private TextView errorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,27 +45,31 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
         mRecyclerView = findViewById(R.id.my_recycler_view);
 
+        //set layout manager to the recycler view
         GridLayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mRecyclerView.setHasFixedSize(true);
+        //build url that will populate the popular movies
         urL = NetworkUtils.buildUrl("popular");
         new MoviesQueryTask().execute(urL);
-        movieAdapter = new MovieAdapter(mMovies, this);
-        mRecyclerView.setAdapter(movieAdapter);
 
+        //set the adapter
+        setMovieAdapter();
+
+        //views
         errorMessage = findViewById(R.id.error_massage);
         progressBar = findViewById(R.id.progress_bar);
-
     }
 
     public void setMovieAdapter() {
         movieAdapter = new MovieAdapter(mMovies, this);
+        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(movieAdapter);
     }
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
+        //send the clicked movie info to DetailsActivity using Parcelable
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtra("Movies", mMovies.get(clickedItemIndex));
         startActivity(intent);
@@ -139,12 +142,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
                 showJsonDataView();
                 try {
-                    //mMovies.clear();
-
+                    //parse the movies from API
                     mMovies = JsonUtils.parseMoviesJson(s);//
-
                     setMovieAdapter();
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

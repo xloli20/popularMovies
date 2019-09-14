@@ -34,22 +34,22 @@ import java.util.ArrayList;
 public class DetailsActivity extends AppCompatActivity implements TrailerAdapter.ListItemClickListener, ReviewsAdapter.ListItemClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private AppDatabase mDB;
-
+    //views
     ImageView mImageView;
+    //for trailers
+    TrailerAdapter trailerAdapter;
     TextView mTitleTextView;
     TextView mRatingTextView;
     TextView mPlotTextView;
     TextView mDateTextView;
     ImageView mFavorite;
-
     RecyclerView trailerRecyclerView;
-    RecyclerView reviewRecyclerView;
-
-    TrailerAdapter trailerAdapter;
-    private ArrayList<Trailers> trailers = new ArrayList<>();
-
+    //for reviews
     ReviewsAdapter reviewsAdapter;
+    private ArrayList<Trailers> trailers = new ArrayList<>();
+    RecyclerView reviewRecyclerView;
+    //DB object
+    private AppDatabase mDB;
     private ArrayList<Reviews> reviews = new ArrayList<>();
 
     @Override
@@ -57,8 +57,10 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
+        //DB initialization
         mDB = AppDatabase.getInstance(getApplicationContext());
 
+        //views
         trailerRecyclerView = findViewById(R.id.trailer_list_view);
         reviewRecyclerView = findViewById(R.id.reviews_list_view);
         mImageView = findViewById(R.id.mPoster);
@@ -69,6 +71,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
         mFavorite = findViewById(R.id.fav);
 
 
+        //to get the clicked movie info using Parcelable
         final Intent intent = getIntent();
         final Movies movies = intent.getParcelableExtra("Movies");
         mTitleTextView.setText(movies.getmTitle());
@@ -81,11 +84,14 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
                 .error(R.drawable.ic_launcher_background)
                 .into(mImageView);
 
+        //to add to the favorites movies
         mFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //change the star color
                 mFavorite.setImageResource(R.drawable.ic_fav);
-                //Todo: add movie data to the DB
+
+                //add movie data to the DB
                 String mTitle = movies.getmTitle();
                 int mId = movies.getId();
                 String mDate = movies.getmDate();
@@ -104,6 +110,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
             }
         });
 
+        //setting the trailers recycler views
         LinearLayoutManager tLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         trailerRecyclerView.setLayoutManager(tLinearLayoutManager);
         setTrailerAdapter();
@@ -111,6 +118,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
         Log.d(TAG, "onCreate: url " + urL);
         new TrailerQueryTask().execute(urL);
 
+        //setting the reviews recycler view
         LinearLayoutManager rLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         reviewRecyclerView.setLayoutManager(rLinearLayoutManager);
         setReviewAdapter();
@@ -132,6 +140,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
     }
     @Override
     public void onListItemClick(int clickedItemIndex) {
+        //intent to open the videos in YouTube
         Intent intentYT = new Intent(Intent.ACTION_VIEW);
         intentYT.setData(Uri.parse("https://www.youtube.com/watch?v=" + trailers.get(clickedItemIndex).gettKey()));
         startActivity(intentYT);
@@ -162,6 +171,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
         protected void onPostExecute(String s) {
             if (s != null && !s.equals("")) {
                 try {
+                    //parse the trailers from API
                     trailers = JsonUtils.parseTrailersJson(s);
                     setTrailerAdapter();
                 } catch (JSONException e) {
@@ -195,6 +205,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
         protected void onPostExecute(String s) {
             if (s != null && !s.equals("")) {
                 try {
+                    //parse the reviews from API
                     reviews = JsonUtils.parseReviewsJson(s);
                     setReviewAdapter();
                 } catch (JSONException e) {
