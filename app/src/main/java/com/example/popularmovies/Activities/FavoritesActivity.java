@@ -1,16 +1,23 @@
 package com.example.popularmovies.Activities;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.popularmovies.Adapters.FavoritesAdapter;
+import com.example.popularmovies.AppExecutors;
 import com.example.popularmovies.Database.AppDatabase;
 import com.example.popularmovies.Database.FavoritesMovies;
+import com.example.popularmovies.MainViewModel;
 import com.example.popularmovies.R;
 
 import java.util.List;
@@ -36,12 +43,9 @@ public class FavoritesActivity extends AppCompatActivity {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         fRecyclerView.setLayoutManager(mLayoutManager);
         fRecyclerView.setHasFixedSize(true);
-        Log.d(TAG, "onResume: get all ");
 
-        List<FavoritesMovies> aa = mDB.favoritesMoviesDao().getAll();
-        Log.d(TAG, "onResume: get all " + aa);
+        favoritesAdapter = new FavoritesAdapter(this);
 
-        favoritesAdapter = new FavoritesAdapter(aa);
         fRecyclerView.setAdapter(favoritesAdapter);
 
         errorMessage = findViewById(R.id.error_fav_massage);
@@ -49,22 +53,63 @@ public class FavoritesActivity extends AppCompatActivity {
 
         mDB = AppDatabase.getInstance(getApplicationContext());
 
+        //
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            // Called when a user swipes left or right on a ViewHolder
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                // call the diskIO execute method with a new Runnable and implement its run method
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        // get the position from the viewHolder parameter
+                        int position = viewHolder.getAdapterPosition();
+                        List<FavoritesMovies> favorites = favoritesAdapter.getTasks();
+                        //Call deleteTask in the taskDao with the task at that position
+                        mDB.favoritesMoviesDao().deleteMovie(favorites.get(position));
+                    }
+                });
+            }
+        }).attachToRecyclerView(fRecyclerView);
+
         mFavorite = findViewById(R.id.fav);
-//        mFavorite.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mFavorite.setImageResource(R.drawable.ic_unfav);
-//                //Todo: delete movie data from the DB
-//            }
-//        });
+        mFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                mFavorite.setImageResource(R.drawable.ic_unfav);
+                //Todo: delete movie data from the DB
+//                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        int position = view.
+//                        List<FavoritesMovies> favorites = favoritesAdapter.getFavorites();
+//                        mDB.favoritesMoviesDao().deleteMovie(favorites.get(position));
+//                        retrieveTasks();
+//                    }
+//                });
+            }
+        });
+
+        setupViewModel();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        List<FavoritesMovies> aa = mDB.favoritesMoviesDao().getAll();
-        Log.d(TAG, "onResume: get all " + aa);
-        favoritesAdapter = new FavoritesAdapter(mDB.favoritesMoviesDao().getAll());
 
+    private void setupViewModel() {
+        // Declare a ViewModel variable and initialize it by calling ViewModelProviders.of
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        // Observe the LiveData object in the ViewModel
+        viewModel.getFavorites().observe(this, new Observer<List<FavoritesMovies>>() {
+            @Override
+            public void onChanged(@Nullable List<FavoritesMovies> favoritesMovies) {
+                Log.d(TAG, "Updating list of movies from LiveData in ViewModel");
+                favoritesAdapter.setmFavorites(favoritesMovies);
+            }
+        });
     }
+
 }

@@ -1,5 +1,6 @@
 package com.example.popularmovies.Adapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,9 +20,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     private int viewHolderCount;
     private List<FavoritesMovies> mFavorites;
 
+    Context context;
 
-    public FavoritesAdapter(List<FavoritesMovies> movies) {
-        mFavorites = movies;
+    public FavoritesAdapter(Context context) {
+        this.context = context;
         viewHolderCount = 0;
     }
 
@@ -39,12 +41,19 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
     @Override
     public int getItemCount() {
+        if (mFavorites == null) {
+            return 0;
+        }
         return mFavorites.size();
     }
 
     public void setmFavorites(List<FavoritesMovies> favoritesMovies) {
         mFavorites = favoritesMovies;
         notifyDataSetChanged();
+    }
+
+    public List<FavoritesMovies> getTasks() {
+        return mFavorites;
     }
 
     class FavoritesViewHolder extends RecyclerView.ViewHolder {
