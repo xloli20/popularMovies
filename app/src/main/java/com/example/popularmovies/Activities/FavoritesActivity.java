@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.popularmovies.Adapters.FavoritesAdapter;
 import com.example.popularmovies.AppExecutors;
@@ -28,7 +27,6 @@ public class FavoritesActivity extends AppCompatActivity {
     ImageView mFavorite;
     private FavoritesAdapter favoritesAdapter;
     private RecyclerView fRecyclerView;
-    private TextView errorMessage;
 
     private AppDatabase mDB;
 
@@ -46,8 +44,6 @@ public class FavoritesActivity extends AppCompatActivity {
         favoritesAdapter = new FavoritesAdapter(this);
 
         fRecyclerView.setAdapter(favoritesAdapter);
-
-        errorMessage = findViewById(R.id.error_fav_massage);
 
 
         mDB = AppDatabase.getInstance(getApplicationContext());

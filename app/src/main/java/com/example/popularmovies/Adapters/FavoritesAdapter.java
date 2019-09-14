@@ -74,8 +74,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
             Picasso.get()
                     .load(favoritesMovies.getmImage())
-                    .placeholder(R.drawable.laoding)
-                    .error(R.drawable.laoding)
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.error_laoding)
                     .into(mPosterImageView);
             mTitleTextView.setText(favoritesMovies.getmTitle());
             mDateTextView.setText(favoritesMovies.getmDate());

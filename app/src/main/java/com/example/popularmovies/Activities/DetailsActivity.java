@@ -1,6 +1,5 @@
 package com.example.popularmovies.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -37,8 +36,6 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
 
     private AppDatabase mDB;
 
-    Context context;
-
     ImageView mImageView;
     TextView mTitleTextView;
     TextView mRatingTextView;
@@ -49,8 +46,9 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
     RecyclerView trailerRecyclerView;
     RecyclerView reviewRecyclerView;
 
-    private TrailerAdapter trailerAdapter;
+    TrailerAdapter trailerAdapter;
     private ArrayList<Trailers> trailers = new ArrayList<>();
+
     ReviewsAdapter reviewsAdapter;
     private ArrayList<Reviews> reviews = new ArrayList<>();
 
@@ -98,7 +96,6 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
-                        // COMPLETED (3) Move the remaining logic inside the run method
                         mDB.favoritesMoviesDao().insertMovie(favoritesMovies);
                         Log.d(TAG, "onClick: movie inserted ");
                         finish();
