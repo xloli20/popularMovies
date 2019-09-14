@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -77,23 +76,23 @@ public class FavoritesActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(fRecyclerView);
 
-        mFavorite = findViewById(R.id.fav);
-        mFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                mFavorite.setImageResource(R.drawable.ic_unfav);
-                //Todo: delete movie data from the DB
-//                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        int position = view.
-//                        List<FavoritesMovies> favorites = favoritesAdapter.getFavorites();
-//                        mDB.favoritesMoviesDao().deleteMovie(favorites.get(position));
-//                        retrieveTasks();
-//                    }
-//                });
-            }
-        });
+//        mFavorite = findViewById(R.id.fav);
+//        mFavorite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(final View view) {
+//                mFavorite.setImageResource(R.drawable.ic_unfav);
+//                //Todo: delete movie data from the DB
+////                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+////                    @Override
+////                    public void run() {
+////                        int position = view.
+////                        List<FavoritesMovies> favorites = favoritesAdapter.getFavorites();
+////                        mDB.favoritesMoviesDao().deleteMovie(favorites.get(position));
+////                        retrieveTasks();
+////                    }
+////                });
+//            }
+//        });
 
         setupViewModel();
     }

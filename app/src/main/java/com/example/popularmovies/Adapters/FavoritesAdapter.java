@@ -64,7 +64,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         public FavoritesViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            mPosterImageView = itemView.findViewById(R.id.mPosterItem);
+            mPosterImageView = itemView.findViewById(R.id.mPoster);
             mTitleTextView = itemView.findViewById(R.id.mTitle);
             mDateTextView = itemView.findViewById(R.id.mDate);
         }
