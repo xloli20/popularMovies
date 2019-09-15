@@ -8,7 +8,7 @@
         android:id="@+id/author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/_5sdp"
         android:text="@string/overview"
         android:textColor="#ffffff"
         android:textSize="20sp"
@@ -18,7 +18,7 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/_5sdp"
         android:text="@string/bla"
         android:textColor="#ffffff"
         android:textSize="17sp" />

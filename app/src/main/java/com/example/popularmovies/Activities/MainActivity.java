@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     private ProgressBar progressBar;
     //views
     private TextView errorMessage;
+
     GridLayoutManager mLayoutManager;
     Parcelable listState;
 
