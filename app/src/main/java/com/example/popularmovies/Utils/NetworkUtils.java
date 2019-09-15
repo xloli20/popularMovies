@@ -15,11 +15,11 @@ public final class NetworkUtils {
     }
 
 
-    final static String MOVIES_BASE_URL =
+    private final static String MOVIES_BASE_URL =
             "https://api.themoviedb.org/3/movie?";
 
-    final static String PARAM_API_KEY = "api_key";
-    final static String API_KEY = "53060cc351a94100316d9fdab87ffc7e";
+    private final static String PARAM_API_KEY = "api_key";
+    private final static String API_KEY = "53060cc351a94100316d9fdab87ffc7e";
 
 
 

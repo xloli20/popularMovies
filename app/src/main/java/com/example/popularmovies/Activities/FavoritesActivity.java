@@ -26,7 +26,7 @@ public class FavoritesActivity extends AppCompatActivity {
     //ImageView mFavorite;
 
     private FavoritesAdapter favoritesAdapter;
-    RecyclerView fRecyclerView;
+    private RecyclerView fRecyclerView;
 
     //DB object
     private AppDatabase mDB;

@@ -15,8 +15,8 @@ public class Trailers implements Parcelable {
             return new Trailers[size];
         }
     };
-    String tKey;
-    String name;
+    private String tKey;
+    private String name;
 
     public Trailers(String tKey, String name) {
         this.tKey = tKey;

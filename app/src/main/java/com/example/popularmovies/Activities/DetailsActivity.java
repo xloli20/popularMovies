@@ -35,19 +35,19 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
     private static final String TAG = MainActivity.class.getSimpleName();
 
     //views
-    ImageView mImageView;
+    private ImageView mImageView;
     //for trailers
-    TrailerAdapter trailerAdapter;
-    TextView mTitleTextView;
-    TextView mRatingTextView;
-    TextView mPlotTextView;
-    TextView mDateTextView;
-    ImageView mFavorite;
-    RecyclerView trailerRecyclerView;
+    private TrailerAdapter trailerAdapter;
+    private TextView mTitleTextView;
+    private TextView mRatingTextView;
+    private TextView mPlotTextView;
+    private TextView mDateTextView;
+    private ImageView mFavorite;
+    private RecyclerView trailerRecyclerView;
     //for reviews
-    ReviewsAdapter reviewsAdapter;
+    private ReviewsAdapter reviewsAdapter;
     private ArrayList<Trailers> trailers = new ArrayList<>();
-    RecyclerView reviewRecyclerView;
+    private RecyclerView reviewRecyclerView;
     //DB object
     private AppDatabase mDB;
     private ArrayList<Reviews> reviews = new ArrayList<>();

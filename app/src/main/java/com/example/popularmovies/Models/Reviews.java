@@ -15,8 +15,8 @@ public class Reviews implements Parcelable {
             return new Reviews[size];
         }
     };
-    String rAuthor;
-    String rContent;
+    private String rAuthor;
+    private String rContent;
 
     public Reviews(String rAuthor, String rContent) {
         this.rAuthor = rAuthor;

@@ -3,6 +3,7 @@ package com.example.popularmovies.Activities;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     private ProgressBar progressBar;
     //views
     private TextView errorMessage;
+    GridLayoutManager mLayoutManager;
+    Parcelable listState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         mRecyclerView = findViewById(R.id.my_recycler_view);
 
         //set layout manager to the recycler view
-        GridLayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        mLayoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //build url that will populate the popular movies
@@ -59,6 +62,34 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         //views
         errorMessage = findViewById(R.id.error_massage);
         progressBar = findViewById(R.id.progress_bar);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save list state
+        listState = mLayoutManager.onSaveInstanceState();
+        outState.putParcelable("movies", listState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Retrieve list state and list/item positions
+        if (savedInstanceState != null)
+            listState = savedInstanceState.getParcelable("movies");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (listState != null) {
+            mLayoutManager.onRestoreInstanceState(listState);
+        }
     }
 
     public void setMovieAdapter() {

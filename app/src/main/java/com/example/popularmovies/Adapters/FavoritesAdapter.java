@@ -20,7 +20,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     private int viewHolderCount;
     private List<FavoritesMovies> mFavorites;
 
-    Context context;
+    private Context context;
 
     public FavoritesAdapter(Context context) {
         this.context = context;
