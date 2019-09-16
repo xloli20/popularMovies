@@ -3,11 +3,11 @@ package com.example.popularmovies.Activities;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     //views
     private TextView errorMessage;
 
-    GridLayoutManager mLayoutManager;
-    Parcelable listState;
+    public final static String LIST_STATE_KEY = "recycler_list_state";
+    private GridLayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,23 +52,33 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         mLayoutManager = new GridLayoutManager(this, numberOfColumns());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        //build url that will populate the popular movies
-        urL = NetworkUtils.buildUrl("popular");
-        new MoviesQueryTask().execute(urL);
-
-        //set the adapter
-        setMovieAdapter();
-
         //views
         errorMessage = findViewById(R.id.error_massage);
         progressBar = findViewById(R.id.progress_bar);
+
+        //check if there's any saved state
+        if (savedInstanceState != null) {
+            showJsonDataView();
+            // Retrieve list state and list/item positions
+            mMovies = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
+            Log.d(TAG, "onCreate: receiving parcelable" + mMovies);
+            setMovieAdapter();
+
+        } else {
+            //build url that will populate the popular movies
+            urL = NetworkUtils.buildUrl("popular");
+            new MoviesQueryTask().execute(urL);
+
+            //set the adapter
+            setMovieAdapter();
+        }
     }
 
     private int numberOfColumns() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         // You can change this divider to adjust the size of the item
-        int widthDivider = 400;
+        int widthDivider = 450;
         int width = displayMetrics.widthPixels;
         int nColumns = width / widthDivider;
         if (nColumns < 2) return 2; //to keep the grid aspect
@@ -78,28 +88,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         // Save list state
-        listState = mLayoutManager.onSaveInstanceState();
-        outState.putParcelable("movies", listState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        // Retrieve list state and list/item positions
-        if (savedInstanceState != null)
-            listState = savedInstanceState.getParcelable("movies");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (listState != null) {
-            mLayoutManager.onRestoreInstanceState(listState);
-        }
+        outState.putParcelableArrayList(LIST_STATE_KEY, mMovies);
+        Log.d(TAG, "onSaveInstanceState: sending parcelable" + mMovies);
     }
 
     public void setMovieAdapter() {

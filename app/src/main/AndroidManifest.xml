@@ -16,6 +16,7 @@
 
         <activity
             android:name=".Activities.FavoritesActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".Activities.MainActivity"></activity>
 
         <activity
