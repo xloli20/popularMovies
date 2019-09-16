@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     private TextView errorMessage;
 
     public final static String LIST_STATE_KEY = "recycler_list_state";
-    private GridLayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         mRecyclerView = findViewById(R.id.my_recycler_view);
 
         //set layout manager to the recycler view
-        mLayoutManager = new GridLayoutManager(this, numberOfColumns());
+        GridLayoutManager mLayoutManager = new GridLayoutManager(this, numberOfColumns());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //views
