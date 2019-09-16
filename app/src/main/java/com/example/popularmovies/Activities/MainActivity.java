@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,8 +33,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     //global URL object
     URL urL = null;
     private RecyclerView mRecyclerView;
-    //for movies
-    private MovieAdapter movieAdapter;
     private ArrayList<Movies> mMovies = new ArrayList<>();
     private ProgressBar progressBar;
     //views
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         mRecyclerView = findViewById(R.id.my_recycler_view);
 
         //set layout manager to the recycler view
-        mLayoutManager = new GridLayoutManager(this, 2);
+        mLayoutManager = new GridLayoutManager(this, numberOfColumns());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //build url that will populate the popular movies
@@ -65,6 +64,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         progressBar = findViewById(R.id.progress_bar);
     }
 
+    private int numberOfColumns() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        // You can change this divider to adjust the size of the item
+        int widthDivider = 400;
+        int width = displayMetrics.widthPixels;
+        int nColumns = width / widthDivider;
+        if (nColumns < 2) return 2; //to keep the grid aspect
+        return nColumns;
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -94,7 +103,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     }
 
     public void setMovieAdapter() {
-        movieAdapter = new MovieAdapter(mMovies, this);
+        //for movies
+        MovieAdapter movieAdapter = new MovieAdapter(mMovies, this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(movieAdapter);
     }
