@@ -1,4 +1,4 @@
-package com.example.popularmovies.Activities;
+package com.example.popularmovies.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;

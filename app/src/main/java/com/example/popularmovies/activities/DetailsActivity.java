@@ -1,4 +1,4 @@
-package com.example.popularmovies.Activities;
+package com.example.popularmovies.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -36,21 +36,23 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
 
     //views
     private ImageView mImageView;
-    //for trailers
-    private TrailerAdapter trailerAdapter;
     private TextView mTitleTextView;
     private TextView mRatingTextView;
     private TextView mPlotTextView;
     private TextView mDateTextView;
     private ImageView mFavorite;
     private RecyclerView trailerRecyclerView;
+    private RecyclerView reviewRecyclerView;
+
     //for reviews
     private ReviewsAdapter reviewsAdapter;
-    private ArrayList<Trailers> trailers = new ArrayList<>();
-    private RecyclerView reviewRecyclerView;
+    private TrailerAdapter trailerAdapter;
+
     //DB object
     private AppDatabase mDB;
+
     private ArrayList<Reviews> reviews = new ArrayList<>();
+    private ArrayList<Trailers> trailers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,12 +151,10 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
 
 
     public class TrailerQueryTask extends AsyncTask<URL, Void, String> {
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
-
         @Override
         protected String doInBackground(URL... urls) {
             URL url = urls[0];
@@ -183,12 +183,10 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
     }
 
     public class ReviewQueryTask extends AsyncTask<URL, Void, String> {
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
-
         @Override
         protected String doInBackground(URL... urls) {
             URL url = urls[0];

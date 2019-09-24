@@ -1,4 +1,4 @@
-package com.example.popularmovies.Activities;
+package com.example.popularmovies.activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,12 +30,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     private static final String TAG = MainActivity.class.getSimpleName();
 
     //global URL object
-    URL urL = null;
-    private RecyclerView mRecyclerView;
+    private URL urL = null;
+
     private ArrayList<Movies> mMovies = new ArrayList<>();
-    private ProgressBar progressBar;
+
     //views
     private TextView errorMessage;
+    private RecyclerView mRecyclerView;
+    private ProgressBar progressBar;
 
     public final static String LIST_STATE_KEY = "recycler_list_state";
 
@@ -60,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
             showJsonDataView();
             // Retrieve list state and list/item positions
             mMovies = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
-            Log.d(TAG, "onCreate: receiving parcelable" + mMovies);
             setMovieAdapter();
 
         } else {
@@ -76,8 +76,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     private int numberOfColumns() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        // You can change this divider to adjust the size of the item
-        int widthDivider = 450;
+        int widthDivider = 500;
         int width = displayMetrics.widthPixels;
         int nColumns = width / widthDivider;
         if (nColumns < 2) return 2; //to keep the grid aspect
@@ -89,11 +88,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         super.onSaveInstanceState(outState);
         // Save list state
         outState.putParcelableArrayList(LIST_STATE_KEY, mMovies);
-        Log.d(TAG, "onSaveInstanceState: sending parcelable" + mMovies);
     }
 
     public void setMovieAdapter() {
-        //for movies
         MovieAdapter movieAdapter = new MovieAdapter(mMovies, this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(movieAdapter);

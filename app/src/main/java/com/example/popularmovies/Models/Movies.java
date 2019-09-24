@@ -23,10 +23,6 @@ public class Movies implements Parcelable {
         this.id = id;
     }
 
-    public Movies() {
-    }
-
-
     public static final Parcelable.Creator<Movies> CREATOR = new Parcelable.Creator<Movies>() {
         @Override
         public Movies createFromParcel(Parcel in) {

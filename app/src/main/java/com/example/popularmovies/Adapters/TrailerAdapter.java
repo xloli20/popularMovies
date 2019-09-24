@@ -48,6 +48,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     }
 
     class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private final String TAG = TrailerViewHolder.class.getSimpleName();
         ImageView tImageView;
 
         public TrailerViewHolder(@NonNull View itemView) {
@@ -58,8 +59,9 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         }
 
         void bind(int position) {
+
             Picasso.get()
-                    .load(R.drawable.ic_play)
+                    .load("https://img.youtube.com/vi/" + trailers.get(position).gettKey() + "/0.jpg")
                     .placeholder(R.drawable.ic_play)
                     .into(tImageView);
         }
