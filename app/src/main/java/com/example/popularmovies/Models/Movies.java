@@ -7,6 +7,7 @@ import android.util.Log;
 public class Movies implements Parcelable {
 
     private static final String TAG = Movies.class.getSimpleName();
+
     private int id;
     private String mTitle;
     private String mImage;

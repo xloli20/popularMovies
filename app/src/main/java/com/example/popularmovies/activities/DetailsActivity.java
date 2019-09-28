@@ -76,6 +76,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
         //to get the clicked movie info using Parcelable
         final Intent intent = getIntent();
         final Movies movies = intent.getParcelableExtra("Movies");
+
         mTitleTextView.setText(movies.getmTitle());
         mPlotTextView.setText(movies.getmPlot());
         mRatingTextView.setText(Double.toString(movies.getmRating()));
