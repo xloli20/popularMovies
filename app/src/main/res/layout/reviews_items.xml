@@ -11,7 +11,7 @@
         android:layout_margin="@dimen/_5sdp"
         android:text="@string/overview"
         android:textColor="#ffffff"
-        android:textSize="@dimen/_20ssp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
@@ -21,6 +21,6 @@
         android:layout_margin="@dimen/_5sdp"
         android:text="@string/bla"
         android:textColor="#ffffff"
-        android:textSize="@dimen/_17ssp" />
+        android:textSize="17sp" />
 
 </LinearLayout>
