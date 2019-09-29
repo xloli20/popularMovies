@@ -44,7 +44,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
     private RecyclerView trailerRecyclerView;
     private RecyclerView reviewRecyclerView;
 
-    //for reviews
+    //adapters
     private ReviewsAdapter reviewsAdapter;
     private TrailerAdapter trailerAdapter;
 
@@ -74,7 +74,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailerAdapter
 
 
         //to get the clicked movie info using Parcelable
-        final Intent intent = getIntent();
+        Intent intent = getIntent();
         final Movies movies = intent.getParcelableExtra("Movies");
 
         mTitleTextView.setText(movies.getmTitle());
