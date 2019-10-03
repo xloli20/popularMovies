@@ -40,7 +40,7 @@ public final class JsonUtils {
         ArrayList<Movies> moviesArrayList = new ArrayList<>();
 
         if (results.length() != 0) {
-            for (int i = 0; i <= 19; i++) {
+            for (int i = 0; i <= results.length() - 1; i++) {
                 JSONObject movieData = results.getJSONObject(i);
                 Movies movie = new Movies(
                         movieData.optString("title"),
@@ -79,7 +79,7 @@ public final class JsonUtils {
         ArrayList<Trailers> trailerArrayList = new ArrayList<>();
 
         if (results.length() != 0) {
-            for (int i = 0; i <= 2; i++) {
+            for (int i = 0; i <= results.length() - 1; i++) {
                 JSONObject trailerData = results.getJSONObject(i);
 
                 Trailers trailer = new Trailers(trailerData.optString("key"));
@@ -110,7 +110,7 @@ public final class JsonUtils {
         ArrayList<Reviews> reviewsArrayList = new ArrayList<>();
 
         if (results.length() != 0) {
-            for (int i = 0; i <= 1; i++) {
+            for (int i = 0; i <= results.length() - 1; i++) {
                 JSONObject reviewsData = results.getJSONObject(i);
 
                 Reviews review = new Reviews(
