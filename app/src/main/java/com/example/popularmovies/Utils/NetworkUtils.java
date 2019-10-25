@@ -19,7 +19,7 @@ public final class NetworkUtils {
             "https://api.themoviedb.org/3/movie?";
 
     private final static String PARAM_API_KEY = "api_key";
-    private final static String API_KEY = "53060cc351a94100316d9fdab87ffc7e";
+    private final static String API_KEY = "";//TODO: paste your Api key here
 
 
 
